@@ -21,7 +21,7 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.use(cors({
-origin:["http://localhost:5173","http://localhost:5174"],
+origin:["https://frontend-my-app.onrender.com","http://localhost:5174"],
 credentials:true
 }))
 app.use("/api/auth",authRoutes)
