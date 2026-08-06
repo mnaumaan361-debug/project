@@ -20,8 +20,8 @@ const user=await User.create({name,email,password:hashPassword})
 let token=await gentoken(user._id)
 res.cookie("token",token,{
     httpOnly:true,
-    secure:false,
-    sameSite:"Strict",
+    secure:true,
+    sameSite:"none",
     maxAge:7 * 24 * 60 * 60 * 1000
 })
 res.status(201).json({sucess:true,
@@ -50,8 +50,8 @@ export const login=async(req,res)=>{
         let token=await gentoken(user._id)
 res.cookie("token",token,{
     httpOnly:true,
-    secure:false,
-    sameSite:"Strict",
+    secure:true,
+    sameSite:"none",
     maxAge:7 * 24 * 60 * 60 * 1000
 })
 res.status(200).json({message:"user login successfully",user,token})
@@ -82,8 +82,8 @@ res.status(200).json({message:"user login successfully",user,token})
         let token=await gentoken(user._id)
 res.cookie("token",token,{
     httpOnly:true,
-    secure:false,
-    sameSite:"Strict",
+    secure:true,
+    sameSite:"none",
     maxAge:7 * 24 * 60 * 60 * 1000
 })
 return res.status(200).json({message:"user login successfully",user,token})
@@ -101,8 +101,8 @@ return res.status(200).json({message:"user login successfully",user,token})
 let token=await gentoken1(email)
 res.cookie("token",token,{
     httpOnly:true,
-    secure:false,
-    sameSite:"Strict",
+    secure:true,
+    sameSite:"none",
     maxAge:7 * 24 * 60 * 60 * 1000
 })
  return res.status(201).json({sucess:true,token
