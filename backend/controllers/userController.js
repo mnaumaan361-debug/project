@@ -2,7 +2,7 @@
 
 //isme hm real time user yani curr user ko lenge
 
-import { MdEmail } from "react-icons/md"
+
 import { User } from "../models/userModel.js"
 
  export const getCurrUser=async(req,res)=>{
