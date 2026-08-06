@@ -1,0 +1,107 @@
+import React, { useContext, useState } from 'react'
+import Logo from "../assets/logo.png"
+import { useNavigate } from 'react-router-dom'
+import Google from "../assets/google.png"
+import { IoEyeOutline } from "react-icons/io5";
+import { FaRegEyeSlash } from "react-icons/fa";
+import AuthContext, { authDataContext } from '../context/AuthContext';
+import axios from "axios"
+import { signInWithPopup } from 'firebase/auth';
+import { auth, provider } from '../../utils/firebase';
+import UserContext, { userDataContext } from '../context/UserContext';
+
+function Registration() {
+  let[show,setShow]=useState(false)
+  let naviget=useNavigate()
+  let {serverUrl}=useContext(authDataContext)
+  const[name,setName]=useState("")
+  const[email,setEmail]=useState("")
+const[password,setPassword]=useState("")
+let{getCurrUser}=useContext(userDataContext)
+  
+  const handleSignup=async(e)=>{
+      e.preventDefault()
+    try {
+    const result=await axios.post(serverUrl + "/api/auth/registration",{
+      name,email,password},
+      {withCredentials:true} //iska use cookie parse k liye krte h)
+    
+    )
+    console.log(result)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const googleSignup=async()=>{
+    try {
+      const response=await signInWithPopup(auth,provider) // ye signInWithPopup method hme screen provide krta ye check krne k liye ki login krna h y nhi
+      let user=response.user
+      let name=user.displayName
+      let email=user.email
+      let result=await axios.post(serverUrl + "/api/auth/googlelogin",{
+        name,email,password
+      },{withCredentials:true})
+
+      console.log(result)
+    getCurrUser()
+    naviget('/')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  
+  return (
+ <div   className="w-[100vw] h-[100vh] bg-gradient-to-l from-[#141414] to-[#0c2025] text-white flex flex-col items-center justify-start">
+    <div className='w-[100vw] h-[80px] flex items-center justify-start px-[30px] gap-[10px]  cursor-pointer' onClick={()=>naviget("/")}>
+      <img className='w-[40px]' src={Logo} alt="" />
+      <h1 className='text-[22px] font-sans'>oneCart</h1>
+    </div>
+      
+      
+     <div className='w-[100%] h-[100px] flex items-center justify-center flex-col'> 
+      <span className='text-[25px] font-semibold'>Registration</span>
+      <span>Welcome to oneCart, Place your order</span>
+       </div>
+      
+      {/* create signup form */}<div className="max-w-[600px] w-[90%] bg-[#00000025] border border-[#96969635] backdrop-blur-2xl rounded-lg shadow-lg flex flex-col items-center py-6">
+
+  <form action="" onSubmit={handleSignup} className="w-[90%] h-[90%] flex flex-col items-center justify-start gap-[20px]">
+
+    <div onClick={googleSignup} className="mt-6 w-[90%] h-[50px] bg-[#42656cae] rounded-lg flex items-center justify-center gap-[10px] py-[20px] cursor-pointer">
+      <img src={Google} alt="Google" className="w-[20px]" />
+      <span>Registration with Google</span>
+    </div>
+<div className='w-[100%] h-[20px] flex items-center justify-center gap-[10px] '>
+  <div className='w-[40%] h-[1px] bg-[#96969635]'></div>
+  OR<div className='w-[40%] h-[1px] bg-[#96969635]' ></div>
+</div>
+{/* inputs */}
+<div className="w-[90%] flex flex-col gap-[10px] relative">
+<input
+  type="text"
+  className="w-full h-[50px] border-2 border-[#96969635] shadow-lg backdrop-blur-sm bg-transparent placeholder:text-white/70 px-[20px] font-semibold " placeholder="UserName" required onChange={(e)=>setName(e.target.value)} value={name}/>
+ 
+  <input
+  type="email"
+  className="w-full h-[55px] border-2 border-[#96969635] shadow-lg backdrop-blur-sm bg-transparent placeholder:text-white/70 px-[20px] font-semibold " placeholder="Email" required onChange={(e)=>setEmail(e.target.value)} value={email}/>
+  
+  <input
+  type={show?"text":"password"}  className="w-full h-[55px] border-2 border-[#96969635] shadow-lg backdrop-blur-sm bg-transparent placeholder:text-white/70 px-[20px] font-semibold " placeholder="Password" required onChange={(e)=>setPassword(e.target.value)} value={password}/>
+  {!show && < IoEyeOutline
+  className="w-[20px] h-[20px] cursor-pointer absolute right-[15px] top-[50%] -translate-y-1/2"
+ onClick={()=>setShow(prev=>!prev)}/>}
+{show && <FaRegEyeSlash className="w-[20px] h-[20px] cursor-pointer absolute right-[15px] top-[50%] -translate-y-1/2"
+ onClick={()=>setShow(prev=>!prev)} />
+}
+  <button className='w-[100%] h-[55px] bg-[#6060f5] rounded-lg flex items-center justify-center mt-[20px] text-[17px] font-semibold'>Create Account</button>
+  <p className='flex gap-[10px] '>You have any account?<span
+   className='text-[#5555f6cf] text-[17px] font-semibold cursor-pointer' onClick={()=>{naviget("/login")}}>Login</span></p>
+  </div>
+  </form>
+  </div>
+
+    </div>
+  )
+}
+
+export default Registration

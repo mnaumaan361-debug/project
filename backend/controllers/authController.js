@@ -1,0 +1,119 @@
+import { User } from "../models/userModel.js";
+import bcrypt from "bcryptjs"
+import {gentoken, gentoken1} from "../config/token.js"
+import validator from "validator";
+export const registration=async(req,res)=>{
+    try{
+const{name,email,password}=req.body;
+const existUser= await User.findOne({email})
+if(existUser){
+    return res.status(400).json({message:"user already exist"})
+}
+if(!validator.isEmail(email)){
+    return res.status(400).json({message:"enter valid email"})
+}
+if(password.length<8){
+    return res.status(400).json({message:"enter strong password"})
+}
+const hashPassword=await bcrypt.hash(password,10)
+const user=await User.create({name,email,password:hashPassword})
+let token=await gentoken(user._id)
+res.cookie("token",token,{
+    httpOnly:true,
+    secure:false,
+    sameSite:"Strict",
+    maxAge:7 * 24 * 60 * 60 * 1000
+})
+res.status(201).json({sucess:true,
+    user,token
+})
+    }
+    catch(error){
+        console.log(error)
+res.status(500).json({message:`Registration Error ${error}`})
+    }
+}
+
+
+export const login=async(req,res)=>{
+    try {
+        const{email,password}=req.body
+        let user= await User.findOne({email})
+        if(!user){
+            res.status(404).json({message:"user is not found"})
+        }
+        let isMatch=await bcrypt.compare(password,user.password)
+        if(!isMatch){
+            res.status(400).json({message:"invalid password"})
+        }
+        // agr user ki sari chize match h to fir hm fir ek acceess token craete krdo
+        let token=await gentoken(user._id)
+res.cookie("token",token,{
+    httpOnly:true,
+    secure:false,
+    sameSite:"Strict",
+    maxAge:7 * 24 * 60 * 60 * 1000
+})
+res.status(200).json({message:"user login successfully",user,token})
+
+    } catch (error) {
+        console.log('login error')
+              res.status(400).json({message:"login error ",error})
+    }
+}
+ export const logout=async(req,res)=>{
+    try {
+        res.clearCookie("token")
+       res.status(200).json({message:"logout successfully"})
+}
+    catch (error) {
+    console.log("logout error")  
+    return res.status(500).json({message:`logout error ${error}`})
+    }}
+
+    export const googleLogin=async(req,res)=>{
+          try {
+        const{email,name}=req.body
+        let user= await User.findOne({email})
+        if(!user){
+            await User.create({name,email})
+        }
+        // agr user ki sari chize match h to fir hm fir ek acceess token craete krdo
+        let token=await gentoken(user._id)
+res.cookie("token",token,{
+    httpOnly:true,
+    secure:false,
+    sameSite:"Strict",
+    maxAge:7 * 24 * 60 * 60 * 1000
+})
+return res.status(200).json({message:"user login successfully",user,token})
+
+    } catch (error) {
+        console.log('google login error')
+              res.status(400).json({message:"login error ",error})
+    }
+    }
+
+    export const adminLogin=async(req,res)=>{
+        try {
+            let {email,password}=req.body
+            if(email===process.env.ADMIN_EMAIL && password ===process.env.ADMIN_PASSWORD){
+let token=await gentoken1(email)
+res.cookie("token",token,{
+    httpOnly:true,
+    secure:false,
+    sameSite:"Strict",
+    maxAge:7 * 24 * 60 * 60 * 1000
+})
+ return res.status(201).json({sucess:true,token
+})
+ return res.status(400).json({msg:"invalid creadintials"})
+        }
+        }
+    catch(error){
+        console.log(error)
+res.status(500).json({message:`admin login ${error}`})
+    }        
+        
+
+    }
