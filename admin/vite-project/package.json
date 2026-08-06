@@ -17,6 +17,9 @@
     "react-router-dom": "^7.18.1",
     "react-toastify": "^11.1.0"
   },
+  "engines": {
+  "node": "20.x"
+},
   "devDependencies": {
     "@babel/core": "^7.29.7",
     "@rolldown/plugin-babel": "^0.2.3",
