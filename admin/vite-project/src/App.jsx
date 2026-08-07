@@ -15,16 +15,35 @@ function App() {
   return (
     <>
     <ToastContainer/>
-{!adminData ? <Login/> : <>
- <Routes>
-    <Route path="/" element={<Home/>}></Route>
-    <Route path="/orders" element={<Order/>}></Route>
-    <Route path="/add" element={<Add/>}></Route>
-    <Route path="/lists" element={<List/>}></Route>
-    <Route path="/login" element={<Login/>}></Route>
-    </Routes>
-  
-  </>}</>
+<Routes>
+
+  <Route
+    path="/"
+    element={adminData ? <Home /> : <Navigate to="/login" replace />}
+  />
+
+  <Route
+    path="/orders"
+    element={adminData ? <Order /> : <Navigate to="/login" replace />}
+  />
+
+  <Route
+    path="/add"
+    element={adminData ? <Add /> : <Navigate to="/login" replace />}
+  />
+
+  <Route
+    path="/lists"
+    element={adminData ? <List /> : <Navigate to="/login" replace />}
+  />
+
+  <Route
+    path="/login"
+    element={!adminData ? <Login /> : <Navigate to="/" replace />}
+  />
+
+</Routes>  
+  </>
  
   )
 }
