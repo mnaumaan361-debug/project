@@ -13,7 +13,7 @@ import axios from 'axios';
 import { authDataContext } from '../context/AuthContext';
 import { shopDataContext } from '../context/ShopContext';
 function Nav() {
-  let { getCurrUser, userData } = useContext(userDataContext)
+  let { getCurrUser, userData,setUserData } = useContext(userDataContext)
   let {
     search,
     setSearch,
@@ -25,11 +25,13 @@ function Nav() {
 
   let [showProfile, setShowProfile] = useState(false)
   let navigate = useNavigate()
+
+  // logout user
   let handleLogout = async () => {
     try {
       let result = await axios.get(serverUrl + '/api/auth/logout', { withCredentials: true })
       console.log(result.data)
-      getCurrUser()
+    setUserData(null)
       navigate('/login')
     } catch (error) {
       console.log(error)

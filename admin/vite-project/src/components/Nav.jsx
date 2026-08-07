@@ -7,14 +7,15 @@ import { adminDataContext } from './AdminContext'
 import { toast } from 'react-toastify'
 function Nav() {
     let naviget=useNavigate()
-    let {getAdmin}=useContext(adminDataContext)
+    let {getAdmin,setAdminData}=useContext(adminDataContext)
+    
     let {serverUrl}=useContext(AuthDataContext)
     const logout=async()=>{
     try {
         let result=await axios.get(serverUrl+'api/auth/logout',{withCredentials:true})
       console.log(result)
       toast.success('Admin Logout Successfully')
-    getAdmin()
+    setAdminData(null)
       naviget('/login')
     } catch (error) {
       console.log(error)
