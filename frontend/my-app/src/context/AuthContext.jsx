@@ -3,7 +3,7 @@ import React, { createContext } from 'react'
  export const authDataContext=createContext()
 
 function AuthContext({children}) {
-    let serverUrl="https://onecart-backend-mwjo.onrender.com"
+      let serverUrl = "https://onecart-backend-mwjo.onrender.com"
     let value={
 serverUrl
     }
