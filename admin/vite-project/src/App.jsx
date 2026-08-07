@@ -4,7 +4,7 @@ import Order from './pages/Order'
 import Add from './pages/Add'
 import List from './pages/List'
 import Login from './pages/Login'
-import {Routes,Route} from "react-router-dom"
+import { Routes, Route, Navigate } from "react-router-dom"
 import { useContext } from 'react'
 import { adminDataContext } from './components/AdminContext'
 import { ToastContainer, toast } from 'react-toastify';
