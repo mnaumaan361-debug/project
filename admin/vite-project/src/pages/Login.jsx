@@ -14,23 +14,43 @@ import { toast } from 'react-toastify';
 function Login() {
      const[email,setEmail]=useState("")
         const[password,setPassword]=useState("")
+        const [loading, setLoading] = useState(false);
             let[show,setShow]=useState(false)
             let {serverUrl}=useContext(AuthDataContext)
             let {getAdmin,adminData}=useContext(adminDataContext)
 let naviget=useNavigate()
-const adminLogin=async(e)=>{
-  e.preventDefault()
+
+const adminLogin = async (e) => {
+  e.preventDefault();
+   setLoading(true);
+
+
   try {
-    const result=await axios.post(serverUrl+'api/auth/adminlogin',{email,password},{withCredentials:true})
-     getAdmin()
-naviget('/')
-    console.log(result)
-toast.success('AdminLogin Successfully')
+    const result = await axios.post(
+      serverUrl + "api/auth/adminlogin",
+      { email, password },
+      { withCredentials: true }
+    );
+
+    console.log(result);
+
+    toast.success("Admin Login Successfully");
+
+    getAdmin();
+    naviget("/");
+
   } catch (error) {
-    console.log(error)
-    toast.error( error.response?.data?.message || "Invalid email or password" );
-  }
+    console.log(error);
+
+    toast.error(
+      error.response?.data?.message || "Invalid email or password"
+    );}
+    finally{
+      setLoading(false)
+    }
+  
 }
+
             
      
   return (
@@ -66,7 +86,21 @@ toast.success('AdminLogin Successfully')
       {show && <FaRegEyeSlash className="w-[20px] h-[20px] cursor-pointer absolute  right-[15px] top-[38%] -translate-y-[40%]"
        onClick={()=>setShow(prev=>!prev)} />
       }
-        <button className='w-[100%] h-[55px] bg-[#6060f5] rounded-lg flex items-center justify-center mt-[20px] text-[17px] font-semibold'>Login</button>
+        
+        
+        
+        <button
+  type="submit"
+  disabled={loading}
+  className="w-[100%] h-[55px] bg-[#6060f5] rounded-lg flex items-center justify-center mt-[20px] text-[17px] font-semibold disabled:opacity-70"
+>
+  {loading ? (
+    <div className="w-6 h-6 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+  ) : (
+    "Login"
+  )}
+</button>
+        
         <p className='flex gap-[10px] '>You have no account ?<span
          className='text-[#5555f6cf] text-[17px] font-semibold cursor-pointer' onClick={()=>{naviget("/signup")}}>Create New Account</span></p>
         </div>
