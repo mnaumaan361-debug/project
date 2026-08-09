@@ -106,7 +106,6 @@ function Login() {
   {show && <FaRegEyeSlash className="w-[20px] h-[20px] cursor-pointer absolute  right-[15px] top-[38%] -translate-y-[40%]"
    onClick={()=>setShow(prev=>!prev)} />
   }
-
 <button
   type="submit"
   disabled={loading}
