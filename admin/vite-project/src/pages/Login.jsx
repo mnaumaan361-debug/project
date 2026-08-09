@@ -28,7 +28,7 @@ naviget('/')
 toast.success('AdminLogin Successfully')
   } catch (error) {
     console.log(error)
-    toast.error('AdminLogin Failed')
+    toast.error( error.response?.data?.message || "Invalid email or password" );
   }
 }
             
