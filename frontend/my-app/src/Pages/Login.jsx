@@ -55,7 +55,7 @@ function Login() {
       let name=user.displayName
       let email=user.email
       let result=await axios.post(serverUrl + "/api/auth/googlelogin",{
-        name,email,password
+        name,email
       },{withCredentials:true})
 
       console.log(result)

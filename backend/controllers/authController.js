@@ -76,7 +76,7 @@ res.status(200).json({message:"user login successfully",user,token})
         const{email,name}=req.body
         let user= await User.findOne({email})
         if(!user){
-            await User.create({name,email})
+         let user=  await User.create({name,email})
         }
         // agr user ki sari chize match h to fir hm fir ek acceess token craete krdo
         let token=await gentoken(user._id)

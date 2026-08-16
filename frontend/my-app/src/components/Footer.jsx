@@ -1,7 +1,9 @@
 import React from "react";
 import logo from "../assets/logo.png";
+import { useNavigate } from 'react-router-dom'
 
 function Footer() {
+  let naviget=useNavigate()
   return (
     <footer className="w-full bg-[#dbfcfcec] ">
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-10">
@@ -43,11 +45,11 @@ function Footer() {
             </h2>
 
             <ul className="space-y-3 text-gray-700">
-              <li className="cursor-pointer hover:text-green-600 transition">
+              <li className="cursor-pointer hover:text-green-600 transition" onClick={()=>naviget('/')}>
                 Home
               </li>
 
-              <li className="cursor-pointer hover:text-green-600 transition">
+              <li className="cursor-pointer hover:text-green-600 transition" onClick={()=>naviget('/about')}>
                 About Us
               </li>
 

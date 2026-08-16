@@ -42,12 +42,13 @@ const adminLogin = async (e) => {
   } catch (error) {
     console.log(error);
 
-    toast.error(
-      error.response?.data?.message || "Invalid email or password"
-    );}
+  toast.error(
+    error.response?.data?.message || "Invalid email or password"
+  )}
     finally{
       setLoading(false)
     }
+  
   
 }
 
@@ -88,17 +89,6 @@ const adminLogin = async (e) => {
       }
         
         
-        <button
-  type="submit"
-  disabled={loading}
-  className="w-[100%] h-[55px] bg-[#6060f5] rounded-lg flex items-center justify-center mt-[20px] text-[17px] font-semibold disabled:opacity-70"
->
-  {loading ? (
-    <div className="w-6 h-6 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-  ) : (
-    "Login"
-  )}
-</button>
         
         <p className='flex gap-[10px] '>You have no account ?<span
          className='text-[#5555f6cf] text-[17px] font-semibold cursor-pointer' onClick={()=>{naviget("/signup")}}>Create New Account</span></p>
