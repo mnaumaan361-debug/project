@@ -6,7 +6,7 @@ function AuthContext({children}) {
 
 
 
-    let serverUrl = "https://onecart-backend-mwjo.onrender.com/"
+     let serverUrl = "https://project-backend-m11z.onrender.com/"
 
     let value={
         serverUrl,
