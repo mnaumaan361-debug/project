@@ -106,14 +106,17 @@ res.cookie("token",token,{
     maxAge:7 * 24 * 60 * 60 * 1000
 })
  return res.status(201).json({sucess:true,token
-})
- return res.status(400).json({msg:"invalid creadintials"})
-        }
-        }
+})}
+    // Email ya password dono me se kuch bhi galat ho
+        return res.status(400).json({
+            success: false,
+            message: "Invalid email or password"
+        })
+    }        
     catch(error){
         console.log(error)
 res.status(500).json({message:`admin login ${error}`})
     }        
         
 
-    }
+        }    

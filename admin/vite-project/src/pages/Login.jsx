@@ -22,33 +22,40 @@ let naviget=useNavigate()
 
 const adminLogin = async (e) => {
   e.preventDefault();
+    console.log("1. Login button clicked");
    setLoading(true);
 
 
   try {
+      
     const result = await axios.post(
       serverUrl + "api/auth/adminlogin",
       { email, password },
-      { withCredentials: true }
+      { withCredentials: true ,
+        timeout: 5000
+      }
     );
 
     console.log(result);
-
     toast.success("Admin Login Successfully");
-
-    getAdmin();
-    naviget("/");
-
-  } catch (error) {
-    console.log(error);
-
-  toast.error(
-    error.response?.data?.message || "Invalid email or password"
-  )}
-    finally{
-      setLoading(false)
-    }
   
+   await  getAdmin();
+    naviget("/");
+      
+
+  }catch (error) {
+    console.log("❌ ERROR:", error);
+    console.log("❌ STATUS:", error.response?.status);
+    console.log("❌ DATA:", error.response?.data);
+
+    toast.error(
+        error.response?.data?.message || "Invalid email or password"
+    );
+}
+finally {
+    console.log("✅ FINALLY");
+    setLoading(false);
+}
   
 }
 
