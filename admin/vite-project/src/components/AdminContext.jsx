@@ -11,7 +11,7 @@ import axios from 'axios'
 function AdminContext({children}) {
   let[adminData,setAdminData]=useState(null)
   let{serverUrl}=useContext(AuthDataContext)
-let getAdmin=async(req,res)=>{
+let getAdmin=async()=>{
 try {
     let result=await axios.get(serverUrl+"api/user/getadmin",{withCredentials:true})
     setAdminData(result.data)
@@ -22,9 +22,11 @@ try {
  console.log(error) 
  setAdminData(null)
 }}
-useEffect(()=>{
-getAdmin()
-},[])
+useEffect(() => {
+  if (serverUrl) {
+    getAdmin();
+  }
+}, [serverUrl]);
 
  
 const currency = "₹";

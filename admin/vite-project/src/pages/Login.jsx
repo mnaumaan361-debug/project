@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
-import Google from "../assets/google.png"
+
 import Logo from "../assets/logo.png"
 import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
@@ -71,27 +71,49 @@ const adminLogin = async (e) => {
       
         <form  onSubmit={adminLogin}  className="w-[90%] h-[90%] flex flex-col items-center justify-start gap-[20px]">
       
-          
-      {/* inputs */}
-      <div className="w-[90%] flex flex-col gap-[10px] relative">
-      
-        <input
-        type="email"
-        className="w-full h-[55px] border-2 border-[#96969635] shadow-lg backdrop-blur-sm bg-transparent placeholder:text-white/70 px-[20px] font-semibold " placeholder="Email" onChange={(e)=>setEmail(e.target.value)} value={email} />
-        
-        <input
-        type={show?"text":"password"}  className="w-full h-[55px] border-2 border-[#96969635] shadow-lg backdrop-blur-sm bg-transparent placeholder:text-white/70 px-[20px] font-semibold " placeholder="Password" onChange={(e)=>setPassword(e.target.value)} value={password}/>
-        {!show && < IoEyeOutline
-        className="w-[20px] h-[20px] cursor-pointer absolute   right-[15px]  top-[38%] -translate-y-[45%]"
-       onClick={()=>setShow(prev=>!prev)}/>}
-      {show && <FaRegEyeSlash className="w-[20px] h-[20px] cursor-pointer absolute  right-[15px] top-[38%] -translate-y-[40%]"
-       onClick={()=>setShow(prev=>!prev)} />
-      }
-        
-        
-        
-        <p className='flex gap-[10px] '>You have no account ?<span
-         className='text-[#5555f6cf] text-[17px] font-semibold cursor-pointer' onClick={()=>{naviget("/signup")}}>Create New Account</span></p>
+          {/* inputs */}
+<div className="w-[90%] flex flex-col gap-[10px] relative">
+
+  <input
+    type="email"
+    required
+    className="w-full h-[55px] rounded-lg border-2 border-[#96969635] shadow-lg backdrop-blur-sm bg-transparent placeholder:text-white/70 px-[20px] font-semibold"
+    placeholder="Email"
+    onChange={(e) => setEmail(e.target.value)}
+    value={email}
+  />
+
+  <input
+    required
+    type={show ? "text" : "password"}
+    className="w-full h-[55px] rounded-lg border-2 border-[#96969635] shadow-lg backdrop-blur-sm bg-transparent placeholder:text-white/70 px-[20px] font-semibold"
+    placeholder="Password"
+    onChange={(e) => setPassword(e.target.value)}
+    value={password}
+  />
+
+  {!show && (
+    <IoEyeOutline
+      className="w-[20px] h-[20px] text-gray-400 cursor-pointer absolute right-[15px] top-[45%]"
+      onClick={() => setShow((prev) => !prev)}
+    />
+  )}
+
+  {show && (
+    <FaRegEyeSlash
+      className="w-[20px] h-[20px] text-gray-400 cursor-pointer absolute right-[15px] top-[45%]"
+      onClick={() => setShow((prev) => !prev)}
+    />
+  )}
+
+  <button
+    type="submit"
+    disabled={loading}
+    className="w-[90%] h-[50px] self-center bg-blue-600 rounded-lg font-semibold text-white hover:bg-blue-700 disabled:opacity-50"
+  >
+    {loading ? "Logging in..." : "Login"}
+  </button>
+
         </div>
         </form>
         </div>

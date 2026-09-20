@@ -21,7 +21,10 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.use(cors({
-origin:["https://frontend-my-app.onrender.com","https://onecart-admin-hqkj.onrender.com"],
+origin:[
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "https://frontend-my-app.onrender.com","https://onecart-admin-hqkj.onrender.com"],
 credentials:true
 }))
 app.use("/api/auth",authRoutes)
