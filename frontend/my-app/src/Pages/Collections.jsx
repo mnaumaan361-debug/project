@@ -230,7 +230,7 @@ function Collections() {
                 <label className="flex gap-[10px] items-center">
                   <input
                     type="checkbox"
-                    value="Topwear"
+                    value="TopWear"
                     onChange={toggleSubCategory}
                   />
                   Topwear
@@ -239,7 +239,7 @@ function Collections() {
                 <label className="flex gap-[10px] items-center">
                   <input
                     type="checkbox"
-                    value="Bottomwear"
+                    value="BottomWear"
                     onChange={toggleSubCategory}
                   />
                   Bottomwear
@@ -248,7 +248,7 @@ function Collections() {
                 <label className="flex gap-[10px] items-center">
                   <input
                     type="checkbox"
-                    value="Winterwear"
+                    value="WinterWear"
                     onChange={toggleSubCategory}
                   />
                   Winterwear

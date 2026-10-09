@@ -15,6 +15,8 @@ import Cart from "./Pages/Cart.jsx";
 import PlaceOrder from "./Pages/PlaceOrder.jsx";
 import Order from "./Pages/Order.jsx";
 import { ToastContainer, toast } from 'react-toastify';
+import Ai from "./components/Ai.jsx";
+
 
 function App() {
   const location = useLocation();
@@ -22,6 +24,8 @@ function App() {
 
   return (
     <>
+
+   
     <ToastContainer/>
       {userData && <Nav />}
 
@@ -189,6 +193,9 @@ function App() {
           }
         />
       </Routes>
+         {location.pathname !== "/login" &&
+        location.pathname !== "/signup" && <Ai />}
+
     </>
   );
 }
